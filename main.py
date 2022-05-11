@@ -1,16 +1,15 @@
 from rich.console import Console
 
-# console = Console(theme=custom_theme)
-# console.print("This is information", style="info")
-# console.print("[warning]The pod bay doors are locked[/warning]")
-# console.print("Something terrible happened!", style="danger")
-# console = Console()
-
-
-orders = [{
+orders = [
+        {
         'order_no': 1234,
         'items': [['s', 5,6,2,11,660],['n', 3,2,1,6.5,39]]
-        }]
+        },
+        {
+        'order_no': 1133,
+        'items': [['s', 5,6,2,11,660],['n', 3,2,1,6.5,39]]
+        }
+        ]
 
 #E2AEDD
 #B81365
@@ -24,25 +23,30 @@ orders = [{
 
 
 def order_print(orders):
+    gtotal = 0
     from rich.theme import Theme
 
     custom_theme = Theme({
         "t" : "#b81365",
         "on": "#EBCBF4",
-        "dm": "#3dfaff",
+        "dm": "#dc6acf",
         "q": "#ff6700",
         "rm": "#80ed99",
-        "a": "#ff331f"
+        "a": "#ff331f",
+        "tt": "#3dfaff"
     })
     
     console = Console(theme=custom_theme)
+    
     for i in orders:
         o_n = i['order_no']
         items = i['items']
         for i in items:
+            gtotal = gtotal + i[-1]
             console.print(f'[on]Order No.[/on] {o_n} [t]Type:[/t] {i[0].upper()} [dm]Dimension:[/dm] {i[1]}x{i[2]} [q]Qty:[/q] {i[3]} [rm]Rate:[/rm] {i[4]} [a]Amount:[/a] {i[-1]}')
+        
+    console.print("[tt]Total[/tt]", gtotal)
 
-order_print(orders)
 
 
 
@@ -85,12 +89,13 @@ def gen_order():
     orders.append(order)
     
 
-# q = ''
-#
-# while q != 'q':
-#     print("Hare Krishna")
-#     gen_order()
-#     import os
-#     os.system('cls')
-#     print(orders)
-#     q = input("Press enter to add new item (q to quit) :")
+q = ''
+
+while q != 'q':
+    # print("Hare Krishna")
+    import os
+    os.system('cls')
+    order_print(orders)
+    gen_order()
+    # print(orders)
+    q = input("Press enter to add new item (q to quit) :")
